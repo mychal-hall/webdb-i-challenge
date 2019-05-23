@@ -17,6 +17,14 @@ server.get("/api/accounts", async (req, res) => {
   }
 });
 
-
+server.post("/api/accounts", async (req, res) => {
+  try {
+    const account = await Accounts.add(req.body);
+    res.status(201).json(account);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error adding a new account" });
+  }
+});
 
 module.exports = server;
