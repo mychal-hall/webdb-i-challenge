@@ -57,4 +57,20 @@ server.delete("/api/accounts/:id", async (req, res) => {
   }
 });
 
+server.put("/api/accounts/:id", async (req, res) => {
+  try {
+    const account = await Accounts.update(req.params.id, req.body);
+    if (account) {
+      res.status(200).json({ id: req.params.id, ...req.body });
+    } else {
+      res
+        .status(404)
+        .json({ message: "Error, no account exists with that ID" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: "Error updating the account" });
+  }
+});
+
 module.exports = server;
